@@ -1,21 +1,51 @@
-<!DOCTYPE html>
-<html>
-<body>
-    <!--
-    <script>
-      // Append a trailing slash if necessary.
-      if (!/\.html$|\/$/.test(location.pathname)) location.pathname += '/'
-    </script>
-    -->
-    <script src="lib/markdown.js"></script>
-    <script src="lib/printMarkdown.js"></script>
-    <div id="source">
-# Team BAP #
-**Blog : [http://blog.engineerpub.com/](http://blog.engineerpub.com/)**
+---
+layout: default
+---
+
+<div class="home">
+
+  {% if site.theme.header_text %}
+  <div class="call-out">{{ site.theme.header_text }}</div>
+  {% endif %}
+
+  <div class="posts">
+    {% for post in paginator.posts %}
+    <div class="post-teaser">
+    
+      <header>
+        <h1>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h1>
+        
+        <p class="meta">{{ post.date | date: "%B %-d, %Y" }}</p>
+      </header>
+
+      <div class="excerpt">
+        {{ post.excerpt }}
+
+        <a class="button" href="{{ post.url | prepend: site.baseurl }}">{{ site.theme.str_continue_reading }}</a>
+      </div>
+      
     </div>
-    <div id="view"> </div>
-<footer>
-<a href="http://www.dnsever.com" target="dnsever"><img src="http://banner.dnsever.com/dnsever-banner_62x15.gif" border="0" alt="DNS Powered by DNSEver.com"></a>
-</footer>
-</body>
-</html>
+    {% endfor %}
+  </div>
+
+  {% if paginator.total_pages > 1 %}
+  <div class="pagination">
+  
+    {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="button" >
+      <i class="fa fa-chevron-left"></i> 
+      {{ site.theme.str_prev }}
+    </a>
+    {% endif %}
+
+    {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="button" >
+      {{ site.theme.str_next }} 
+      <i class="fa fa-chevron-right"></i>
+    </a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
